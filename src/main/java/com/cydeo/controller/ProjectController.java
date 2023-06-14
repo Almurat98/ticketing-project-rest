@@ -3,6 +3,7 @@ package com.cydeo.controller;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.ResponseWrapper;
+import com.cydeo.entity.User;
 import com.cydeo.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +42,25 @@ public class ProjectController {
     @PutMapping
     public ResponseEntity<ResponseWrapper>updateProject(@RequestBody ProjectDTO projectDTO){
         projectService.update(projectDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("Project created",HttpStatus.CREATED));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("Project updated",HttpStatus.CREATED));
     }
 
     @DeleteMapping("/{projectCode}")
     public ResponseEntity<ResponseWrapper>deleteUserByUsername(@PathVariable String projectCode){
         projectService.delete(projectCode);
         return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseWrapper("Project deleted",HttpStatus.NO_CONTENT));
+    }
+
+    @GetMapping("/manager/project-status")
+    public ResponseEntity<ResponseWrapper>getProjectByProjectManager(){
+        List<ProjectDTO> projectsByManager = projectService.listAllProjectDetails();
+
+        return ResponseEntity.ok(new ResponseWrapper("Project List successfully retrieved",projectsByManager, HttpStatus.OK));
+    }
+
+    @PutMapping("/manager/complete/{code}")
+    public ResponseEntity<ResponseWrapper> managerCompleteProject(@PathVariable String code){
+        projectService.complete(code);
+        return ResponseEntity.ok(new ResponseWrapper("Project Completed",HttpStatus.OK));
     }
 }
