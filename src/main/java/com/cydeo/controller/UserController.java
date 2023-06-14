@@ -18,12 +18,10 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-
-    private final RoleService roleService;
     private final UserService userService;
 
-    public UserController(RoleService roleService, UserService userService) {
-        this.roleService = roleService;
+    public UserController( UserService userService) {
+
         this.userService = userService;
     }
 
