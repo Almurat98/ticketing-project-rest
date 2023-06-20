@@ -1,8 +1,7 @@
 package com.cydeo.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,6 +9,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseWrapper {
 
     private boolean success;

@@ -4,6 +4,7 @@ import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.ResponseWrapper;
 import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class UserController {
 
     @GetMapping
     @RolesAllowed("Admin")
+    @Operation(summary = "Get Users")
     public ResponseEntity<ResponseWrapper>getUsers(){
         List<UserDTO>userDTOList= userService.listAllUsers();
         return ResponseEntity.ok(new ResponseWrapper("User List successfully retrieved",userDTOList, HttpStatus.OK));
@@ -35,6 +37,7 @@ public class UserController {
 
     @GetMapping("/{userName}")
     @RolesAllowed("Admin")
+    @Operation(summary = "Get User by Username")
     public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable String userName){
         UserDTO user = userService.findByUserName(userName);
         return ResponseEntity.ok(new ResponseWrapper("User"+userName+" successfully retrieved",user,HttpStatus.OK));
@@ -42,6 +45,7 @@ public class UserController {
 
     @PostMapping
     @RolesAllowed("Admin")
+    @Operation(summary = "Create User")
     public ResponseEntity<ResponseWrapper>createUser(@RequestBody UserDTO userDTO){
         userService.save(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("User created",HttpStatus.CREATED));
@@ -49,6 +53,7 @@ public class UserController {
 
     @PutMapping
     @RolesAllowed("Admin")
+    @Operation(summary = "update User")
     public ResponseEntity<ResponseWrapper>updateUser(@RequestBody UserDTO userDTO){
         userService.update(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("User created",HttpStatus.CREATED));
@@ -56,6 +61,7 @@ public class UserController {
 
     @DeleteMapping("/{userName}")
     @RolesAllowed("Admin")
+    @Operation(summary = "Delete User")
     public ResponseEntity<ResponseWrapper>deleteUserByUsername(@PathVariable String userName){
         userService.deleteByUserName(userName);
         return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseWrapper("user deleted",HttpStatus.NO_CONTENT));
