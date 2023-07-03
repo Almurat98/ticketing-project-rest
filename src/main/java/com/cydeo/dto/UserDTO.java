@@ -1,13 +1,13 @@
 package com.cydeo.dto;
 
 import com.cydeo.enums.Gender;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class UserDTO {
 
     private Long id;
